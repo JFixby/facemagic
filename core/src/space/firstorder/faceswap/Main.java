@@ -93,24 +93,23 @@ public class Main extends ApplicationAdapter {
 
 		//Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		if (mode == Mode.normal) {
-			mode = Mode.prepare;
-			if (deviceCameraControl != null) {
-				deviceCameraControl.prepareCameraAsync();
-			}
-		} else if (mode == Mode.prepare) {
-			Gdx.gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
-			if (deviceCameraControl != null) {
-				if (deviceCameraControl.isReady()) {
-					deviceCameraControl.startPreviewAsync();
-					mode = Mode.preview;
+		if (Gdx.input.isTouched()) {
+			if (mode == Mode.normal) {
+				mode = Mode.prepare;
+				if (deviceCameraControl != null) {
+					deviceCameraControl.prepareCameraAsync();
 				}
 			}
-		} else if (mode == Mode.preview) {
-			Gdx.gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		}
 
+//		} else if (mode == Mode.preview) {
+//			Gdx.gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+//		}
+
 		cam.update();
+
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		modelBatch.begin(cam);
 		if (cube != null)

@@ -25,7 +25,7 @@ public class AndroidLauncher extends AndroidApplication {
 
 		DeviceCameraControl cameraControl = new AndroidDeviceCameraController(this);
 		initialize(new Main(cameraControl), cfg);
-
+//		initialize(new Main(null), cfg);
 		if (graphics.getView() instanceof SurfaceView) {
 			SurfaceView glView = (SurfaceView) graphics.getView();
 			// force alpha channel - I'm not sure we need this as the GL surface is already using alpha channel
