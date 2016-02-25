@@ -36,12 +36,12 @@ public class Main extends ApplicationAdapter {
 	private final DeviceCameraControl deviceCameraControl;
 
 	public enum Mode {
-		normal,
+		initial,
 		prepare,
 		preview
 	}
 
-	private Mode mode = Mode.normal;
+	private Mode mode = Mode.initial;
 
 	public Main(DeviceCameraControl cameraControl) {
 		this.deviceCameraControl = cameraControl;
@@ -58,7 +58,7 @@ public class Main extends ApplicationAdapter {
 		assets = new AssetManager();
 
 		assets.load("data/texture.jpg", Texture.class);
-		assets.load("data/cube.obj", Model.class);
+		assets.load("data/stormtrooper.obj", Model.class);
 		loading = true;
 
 		lightSource = new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f);
@@ -67,7 +67,7 @@ public class Main extends ApplicationAdapter {
 		environment.add(lightSource);
 
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(10f, 10f, 10f);
+		cam.position.set(50f, 50f, 50f);
 		cam.lookAt(0, 0, 0);
 		cam.near = 1f;
 		cam.far = 300f;
@@ -80,10 +80,11 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void doneLoading() {
-		cube = new ModelInstance(assets.get("data/cube.obj", Model.class));
-		cube.materials.get(0).set(ColorAttribute.createDiffuse(0.5f, 0.5f, 0.5f, 1));
+		cube = new ModelInstance(assets.get("data/stormtrooper.obj", Model.class));
+		cube.materials.get(0).set(ColorAttribute.createDiffuse(0, 0, 0, 1));
 
 		loading = false;
+		Gdx.app.log("facemagic", "done loading!");
 	}
 
 	@Override
@@ -91,6 +92,7 @@ public class Main extends ApplicationAdapter {
 		if (loading && assets.update())
 			doneLoading();
 
+<<<<<<< HEAD
 		//Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		if (Gdx.input.isTouched()) {
@@ -100,6 +102,27 @@ public class Main extends ApplicationAdapter {
 					deviceCameraControl.prepareCameraAsync();
 				}
 			}
+=======
+		if (mode == Mode.initial) {
+			if (deviceCameraControl != null) {
+				deviceCameraControl.prepareCameraAsync();
+				mode = Mode.prepare;
+			}
+		}
+		else if (mode == Mode.prepare) {
+			Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+			//Gdx.gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
+			/*if (deviceCameraControl != null) {
+				if (deviceCameraControl.isReady()) {
+					deviceCameraControl.startPreviewAsync();
+					mode = Mode.preview;
+				}
+			}*/
+		} else if (mode == Mode.preview) {
+			Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+>>>>>>> 65a4e079c4c1a9610eea4f39b54357b11c8bd056
 		}
 
 //		} else if (mode == Mode.preview) {
@@ -112,8 +135,14 @@ public class Main extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		modelBatch.begin(cam);
-		if (cube != null)
+		if (cube != null) {
 			modelBatch.render(cube, environment);
+			Gdx.app.log("facemagic", "cube rendering!");
+		}
+		else
+		{
+			//Gdx.app.log("facemagic", "cube null!");
+		}
 		modelBatch.end();
 
 		sprites.begin();
