@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -23,7 +24,8 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 
     public void surfaceCreated( SurfaceHolder holder ) {
         // Once the surface is created, simply open a handle to the camera hardware.
-        camera = Camera.open();
+//        camera = Camera.open();
+        camera = openFrontFacingCameraGingerbread();
     }
 
     public void surfaceChanged( SurfaceHolder holder, int format, int width, int height ) {
@@ -71,4 +73,24 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
         return camera;
     }
 
+    private Camera openFrontFacingCameraGingerbread() {
+        int cameraCount = 0;
+        Camera cam = null;
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        cameraCount = Camera.getNumberOfCameras();
+        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
+            Camera.getCameraInfo(camIdx, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                try {
+                    cam = Camera.open(camIdx);
+                } catch (RuntimeException e) {
+                    Log.e("camera", "Camera failed to open: " + e.getLocalizedMessage());
+                }
+            }
+        }
+
+        return cam;
+    }
 }
+
+
