@@ -19,10 +19,20 @@ public class FirstOrderInputProcessor extends CameraInputController {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        int height = Gdx.graphics.getHeight();
-        int width = Gdx.graphics.getWidth();
+//        int height = Gdx.graphics.getHeight();
+//        int width = Gdx.graphics.getWidth();
+//
+//        int yInverted = height - screenY;
+        Gdx.app.log("Example", "touch started at (" + screenX + ", " + screenY + ")");
 
-        int yInverted = height - screenY;
+        if (screenX < 250 && screenY < 250) {
+            if (runnable != null) {
+
+                // call the changeColorsAction runnable interface, implemented in Main
+                runnable.run();
+                return true;
+            }
+        }
 
         // otherwise, just do camera input controls
         return super.touchDown(screenX, screenY, pointer, button);

@@ -60,7 +60,7 @@ public class Main extends ApplicationAdapter {
 
 		assets.load("data/texture.jpg", Texture.class);
 		assets.load("data/stormtrooper.obj", Model.class);
-//		assets.load("data/firstorder.png", Texture.class);
+		assets.load("data/firstorder.png", Texture.class);
 		loading = true;
 
 		lightSource = new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f);
@@ -78,7 +78,13 @@ public class Main extends ApplicationAdapter {
         // set the input processor to work with our custom input:
         //  clicking the image in the lower right should change the colors of the helmets
         //  bonus points: implement your own GestureDetector and an input processor based on it
-		Gdx.input.setInputProcessor(new space.firstorder.faceswap.FirstOrderInputProcessor(cam, null));
+		Gdx.input.setInputProcessor(new FirstOrderInputProcessor(cam, new Runnable() {
+			public void run() {
+				// rotate the model Chien-Yu
+//				cam.rotate(Vector3.Y,30);
+				cube.transform.rotate(Vector3.Y,-10);
+			}
+		}));
 	}
 
 	private void doneLoading() {
@@ -133,11 +139,11 @@ public class Main extends ApplicationAdapter {
 		modelBatch.begin(cam);
 		if (cube != null) {
 			modelBatch.render(cube, environment);
-			Gdx.app.log("facemagic", "cube rendering!");
+//			Gdx.app.log("facemagic", "cube rendering!");
 		}
 		else
 		{
-			Gdx.app.log("facemagic", "cube null!");
+//			Gdx.app.log("facemagic", "cube null!");
 		}
 		modelBatch.end();
 
