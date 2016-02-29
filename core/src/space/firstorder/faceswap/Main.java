@@ -82,7 +82,7 @@ public class Main extends ApplicationAdapter {
 			public void run() {
 				// rotate the model Chien-Yu
 //				cam.rotate(Vector3.Y,30);
-				cube.transform.rotate(Vector3.Y,-10);
+				cube.transform.translate(Vector3.Y);
 			}
 		}));
 	}
@@ -96,6 +96,23 @@ public class Main extends ApplicationAdapter {
 
 		loading = false;
 		Gdx.app.log("facemagic", "done loading!");
+		//TO DO:
+		/*ModelInstance instance = new ModelInstance(model, id);
+		Node node = instance.getNode(id);
+
+		instance.transform.set(node.globalTransform);
+		node.translation.set(0, 0, 0);
+		node.scale.set(1,1,1);
+		node.rotation.idt();
+		instance.calculateTransforms();
+		Degree of Rotation and Translation should from deviceCameraControl
+
+		//instance.transform.translate(0, -150, 0);
+		Quaternion rot = instance.transform.getRotation(new Quaternion());
+        instance.transform.setToRotation(0, 0, 0, 0);
+        instance.transform.translate(0, -150, 0);
+        instance.transform.rotate(rot);
+		**/
 	}
 
 	@Override

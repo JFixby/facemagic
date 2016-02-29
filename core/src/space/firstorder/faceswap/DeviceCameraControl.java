@@ -28,4 +28,11 @@ public interface DeviceCameraControl {
     boolean isReady();
 
     void prepareCameraAsync();
+
+    //detect face
+    /*boolean existFace();
+    float faceRotateX();
+    float faceRotateY();
+    float faceTranslateX();
+    float faceTranslateY();*/
 }

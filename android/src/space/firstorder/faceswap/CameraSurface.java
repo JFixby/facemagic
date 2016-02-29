@@ -1,16 +1,23 @@
 package space.firstorder.faceswap;
 
-import java.io.IOException;
-import java.util.List;
-
 import android.content.Context;
 import android.hardware.Camera;
+
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+//import com.google.android.gms.vision.CameraSource;
+//import com.google.android.gms.vision.face.FaceDetector;
+
+import java.io.IOException;
+import java.util.List;
+
 public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback {
     private Camera camera;
+    //FaceDetector
+
+    //private CameraSource cameraSource;
 
     public CameraSurface( Context context ) {
         super( context );

@@ -16,7 +16,7 @@ android {
     }
     defaultConfig {
         applicationId "space.firstorder.hc"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 23
     }
 }
